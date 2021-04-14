@@ -6,7 +6,7 @@ steps:
   args:
     - '-c'
     - |
-        env=`if echo "${BRANCH_NAME}" | grep -Eq "^master*"; then echo "uat"; else echo "dev"; fi`;
+        env=`if echo "${BRANCH_NAME}" | grep -Eq "^main*"; then echo "uat"; else echo "dev"; fi`;
         terraform init \
         -backend-config=bucket="${PROJECT_ID}-tf-state" \
         -backend-config=prefix="${env}"
