@@ -5,7 +5,6 @@ module "vpc" {
   # Give the network a name and project
   project_id   = var.gcp_project_id
   network_name = "ishim-dev-vpc"
-  description  = "A basic network for developmen tand test purposes"
 
   subnets = [
     {
