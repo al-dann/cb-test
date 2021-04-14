@@ -1,5 +1,5 @@
 module "vpc" {
-  source  = "git::https://github.com/terraform-google-modules/terraform-google-network/modules/vpc.git?ref=v3.2.1"
+  source  = urlencode("github.com/terraform-google-modules/terraform-google-network/modules/vpc?ref=v3.2.1")
   # version = "~> 3.2.1"
 
   # Give the network a name and project
