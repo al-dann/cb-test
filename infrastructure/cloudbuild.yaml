@@ -1,0 +1,21 @@
+steps:
+  - id: "cloud build => cycle"
+    name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+          for prj_dir in projects/*/; do
+            cb_config="${prj_dir}cloudbuild.yaml"
+            if [[ ! -f "${cb_config}" ]]; then
+              continue
+            fi
+
+            echo "Building ${prj_dir} ... "
+            (
+              gcloud builds submit ${prj_dir} --config=${cb_config}
+            ) &
+          done
+          wait
+
+tags: ['admin']
