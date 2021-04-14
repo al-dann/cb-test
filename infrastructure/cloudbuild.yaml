@@ -8,9 +8,11 @@ steps:
     - |
         sfx=`if echo "${BRANCH_NAME}" | grep -Eq "^develop*"; then echo "uat"; else echo "dev"; fi`;
         env=`if echo "${BRANCH_NAME}" | grep -Eq "^release*"; then echo "prd"; else echo "${sfx}"; fi`;
+        cd infrastructure/projects/ishim-dev/
         terraform init \
         -backend-config=bucket="${PROJECT_ID}-tf-state" \
         -backend-config=prefix="${env}"
+        cd ../../../
 
 ## Run the plan command
 - id: "terraform => plan"
