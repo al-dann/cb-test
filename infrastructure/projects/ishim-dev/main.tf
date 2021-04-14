@@ -13,7 +13,7 @@ module "ishim_vpc_sn"{
   source  = "github.com/terraform-google-modules/terraform-google-network/modules/subnets"
 
   project_id   = var.gcp_project_id
-  network_name = "ishim-dev-vpc"
+  network_name = module.ishim_vpc.network_name
 
   subnets = [
     {
