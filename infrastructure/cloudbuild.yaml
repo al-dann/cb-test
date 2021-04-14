@@ -5,6 +5,7 @@ steps:
     args:
       - '-c'
       - |
+          echo "cloud build => cycle"
           for prj_dir in projects/*/; do
             cb_config="${prj_dir}cloudbuild.yaml"
             if [[ ! -f "${cb_config}" ]]; then
