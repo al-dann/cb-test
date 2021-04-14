@@ -1,6 +1,6 @@
 module "vpc" {
-  source  = "github.com/terraform-google-modules/network/google"
-  version = "~> 3.2.0"
+  source  = "git@github.com:terraform-google-modules/network/google.git?ref=v3.2.1"
+  # version = "~> 3.2.1"
 
   # Give the network a name and project
   project_id   = var.gcp_project_id
