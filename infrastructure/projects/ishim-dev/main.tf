@@ -1,5 +1,5 @@
 module "vpc" {
-  source  = "github.com/terraform-google-modules/terraform-google-network/modules/subnets?ref=v3.2.1"
+  source  = "github.com/terraform-google-modules/terraform-google-network/modules/subnets"
   # version = "~> 3.2.1"
 
   # Give the network a name and project
