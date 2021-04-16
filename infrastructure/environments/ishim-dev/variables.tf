@@ -18,8 +18,8 @@ variable "zone" {
 # ===========================
 
 variable "gcp_project_id" {
-  description = "Google Cloud project identifier"
-  default     = "ishim-dev"
+  description = "Target Google Cloud Project identifier. Taken from the GCP Cloud Build."
+  type        = string
 }
 
 # ===========================

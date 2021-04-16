@@ -7,7 +7,7 @@ steps:
     - '-c'
     - |
         env="dev"
-        cd infrastructure/environments/ishim-dev/
+        cd infrastructure/environments/${_PROJECT_ID_PREFIX}-${env}/
         terraform init \
         -backend-config=bucket="ishim-adm-tf-state" \
         -backend-config=prefix="${env}"
@@ -20,7 +20,7 @@ steps:
   args:
     - '-c'
     - |
-        cd infrastructure/environments/ishim-dev/
+        cd infrastructure/environments/${_PROJECT_ID_PREFIX}-${env}/
         terraform plan || exit 1
         cd ../../../
 
@@ -32,7 +32,7 @@ steps:
     - '-c'
     - |
         if [[ ! -f "${_PR_NUMBER}" ]]; then
-          cd infrastructure/environments/ishim-dev/
+          cd infrastructure/environments/${_PROJECT_ID_PREFIX}-${env}/
           terraform apply -auto-approve || exit 1
           cd ../../../
         fi
@@ -40,10 +40,12 @@ steps:
   env:
     # - 'TF_VAR_component=${_COMPONENT}'
     - 'TF_VAR_adm_project_id=$PROJECT_ID'
+    - 'TF_VAR_gcp_project_id=${_PROJECT_ID_PREFIX}-${env}'
     # - 'TF_VAR_repo_branch=$BRANCH_NAME'
     # - 'TF_VAR_repo_commit=$REVISION_ID'
     # - 'TF_LOG=DEBUG'
 
 substitutions:
+  _PROJECT_ID_PREFIX: 'ishim'
 
 tags: ['admin']
