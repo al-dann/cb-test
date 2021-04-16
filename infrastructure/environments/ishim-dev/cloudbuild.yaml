@@ -22,6 +22,9 @@ steps:
         cd infrastructure/environments/${_PROJECT_ID_PREFIX}-${_ENVIRONMENT}/
         terraform plan || exit 1
         cd ../../../
+  env:
+    - 'TF_VAR_adm_project_id=$PROJECT_ID'
+    - 'TF_VAR_gcp_project_id=${_PROJECT_ID_PREFIX}-${_ENVIRONMENT}'
 
 ## Run actual deployment step
 - id: "terraform => apply"
@@ -37,12 +40,8 @@ steps:
         fi
 
   env:
-    # - 'TF_VAR_component=${_COMPONENT}'
     - 'TF_VAR_adm_project_id=$PROJECT_ID'
     - 'TF_VAR_gcp_project_id=${_PROJECT_ID_PREFIX}-${_ENVIRONMENT}'
-    # - 'TF_VAR_repo_branch=$BRANCH_NAME'
-    # - 'TF_VAR_repo_commit=$REVISION_ID'
-    # - 'TF_LOG=DEBUG'
 
 substitutions:
   _PROJECT_ID_PREFIX: 'ishim'
