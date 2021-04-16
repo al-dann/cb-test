@@ -31,6 +31,7 @@ module "ishim_vpc_firewall_internal" {
       },
       {
         protocol = "icmp"
+        ports    = ["0-65535"]
       },
       {
         protocol = "udp"
