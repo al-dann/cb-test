@@ -32,7 +32,7 @@ resource "google_compute_firewall" "ishim_vpc_firewall_internal" {
   source_ranges = values(var.gcp_subnet_range_map)
 
 
-  log_config = {
+  log_config {
     metadata = "INCLUDE_ALL_METADATA"
   }
 }
