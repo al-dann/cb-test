@@ -1,0 +1,50 @@
+steps:
+## Run terraform init step
+- id: "terraform => init"
+  name: 'hashicorp/terraform'
+  entrypoint: 'sh'
+  args:
+    - '-c'
+    - |
+        cd infrastructure/environments/${_PROJECT_ID_PREFIX}-${_ENVIRONMENT}/
+        terraform init \
+        -backend-config=bucket="ishim-adm-tf-state" \
+        -backend-config=prefix="${_ENVIRONMENT}"
+        cd ../../../
+
+## Run the plan command
+- id: "terraform => plan"
+  name: 'hashicorp/terraform'
+  entrypoint: 'sh'
+  args:
+    - '-c'
+    - |
+        cd infrastructure/environments/${_PROJECT_ID_PREFIX}-${_ENVIRONMENT}/
+        terraform plan || exit 1
+        cd ../../../
+  env:
+    - 'TF_VAR_adm_project_id=$PROJECT_ID'
+    - 'TF_VAR_gcp_project_id=${_PROJECT_ID_PREFIX}-${_ENVIRONMENT}'
+
+## Run actual deployment step
+- id: "terraform => apply"
+  name: 'hashicorp/terraform'
+  entrypoint: 'sh'
+  args:
+    - '-c'
+    - |
+        if [[ ! -f "${_PR_NUMBER}" ]]; then
+          cd infrastructure/environments/${_PROJECT_ID_PREFIX}-${_ENVIRONMENT}/
+          terraform apply -auto-approve || exit 1
+          cd ../../../
+        fi
+
+  env:
+    - 'TF_VAR_adm_project_id=$PROJECT_ID'
+    - 'TF_VAR_gcp_project_id=${_PROJECT_ID_PREFIX}-${_ENVIRONMENT}'
+
+substitutions:
+  _PROJECT_ID_PREFIX: 'ishim'
+  _ENVIRONMENT: 'tst'
+
+tags: ['admin']
