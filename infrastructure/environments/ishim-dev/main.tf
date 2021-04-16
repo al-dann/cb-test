@@ -3,3 +3,7 @@ provider "google" {
   region  = var.region
   zone    = var.zone
 }
+
+locals {
+  project_id = var.gcp_project_id
+}
