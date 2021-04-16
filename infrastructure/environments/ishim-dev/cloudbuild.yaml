@@ -33,7 +33,7 @@ steps:
     - |
         if [[ ! -f "${_PR_NUMBER}" ]]; then
           cd infrastructure/environments/ishim-dev/
-          terraform apply -auto-approve
+          terraform apply -auto-approve || exit 1
           cd ../../../
         fi
 

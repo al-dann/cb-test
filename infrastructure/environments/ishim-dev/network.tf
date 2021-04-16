@@ -58,7 +58,7 @@ resource "google_compute_subnetwork" "ishim_vpc_sn_eu_w2" {
 resource "google_compute_subnetwork" "ishim_vpc_sn_eu_w3" {
   project       = local.project_id
   name          = "ishim-dev-sn-ew3"
-  ip_cidr_range = var.gcp_subnet_range_map["europe-west1"]
+  ip_cidr_range = var.gcp_subnet_range_map["europe-west3"]
   region        = "europe-west3"
   network       = google_compute_network.ishim_vpc.id
   description   = "A subnetwork in the 'europe-west3' region"
