@@ -10,27 +10,26 @@ steps:
         terraform init \
         -backend-config=bucket="ishim-adm-tf-state" \
         -backend-config=prefix="${env}"
-        cd ../../../
 
 ## Run the plan command
 - id: "terraform => plan"
   name: 'hashicorp/terraform'
   entrypoint: 'sh'
   args:
-  - '-c'
-  - |
-      terraform plan || exit 1
+    - '-c'
+    - |
+        terraform plan || exit 1
 
 ## Run actual deployment step
 - id: "terraform => apply"
   name: 'hashicorp/terraform'
   entrypoint: 'sh'
   args:
-  - '-c'
-  - |
-      if [[ ! -f "${_PR_NUMBER}" ]]; then
-        terraform apply -auto-approve
-      fi
+    - '-c'
+    - |
+        if [[ ! -f "${_PR_NUMBER}" ]]; then
+          terraform apply -auto-approve
+        fi
 
   env:
     # - 'TF_VAR_component=${_COMPONENT}'
