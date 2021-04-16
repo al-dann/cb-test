@@ -19,7 +19,7 @@ module "ishim_vpc_firewall_internal" {
     description             = "Allow ICMP, TCP, UDP from within the network."
     direction               = "INGRESS"
     priority                = 65534
-    ranges                  = values(var.gcp_pci_subnet_range_map)
+    ranges                  = values(var.gcp_subnet_range_map)
     source_tags             = null
     source_service_accounts = null
     target_tags             = null
@@ -54,18 +54,18 @@ module "ishim_vpc_sn" {
   subnets = [
     {
       subnet_name   = "ishim-dev-sn-ew1"
-      subnet_ip     = var.gcp_pci_subnet_range_map["europe-west1"]
+      subnet_ip     = var.gcp_subnet_range_map["europe-west1"]
       subnet_region = "europe-west1"
     },
     {
       subnet_name   = "ishim-dev-sn-ew2"
-      subnet_ip     = var.gcp_pci_subnet_range_map["europe-west2"]
+      subnet_ip     = var.gcp_subnet_range_map["europe-west2"]
       subnet_region = "europe-west2"
     },
 
     {
       subnet_name   = "ishim-dev-sn-ew3"
-      subnet_ip     = var.gcp_pci_subnet_range_map["europe-west3"]
+      subnet_ip     = var.gcp_subnet_range_map["europe-west3"]
       subnet_region = "europe-west3"
     }
   ]
