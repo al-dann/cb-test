@@ -19,9 +19,7 @@ steps:
   args:
   - '-c'
   - |
-      cd infrastructure/projects/ishim-dev/
       terraform plan || exit 1
-      cd ../../../
 
 ## Run actual deployment step
 - id: "terraform => apply"
