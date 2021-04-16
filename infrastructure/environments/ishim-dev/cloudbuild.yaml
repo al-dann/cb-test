@@ -39,10 +39,9 @@ steps:
 
   env:
     # - 'TF_VAR_component=${_COMPONENT}'
-    # - 'TF_VAR_admin_project_id=$PROJECT_ID'
+    - 'TF_VAR_adm_project_id=$PROJECT_ID'
     # - 'TF_VAR_repo_branch=$BRANCH_NAME'
     # - 'TF_VAR_repo_commit=$REVISION_ID'
-    # - 'TF_VAR_gcp_pci_prj_prefix=${_PROJECT_ID_PREFIX}'
     # - 'TF_LOG=DEBUG'
 
 substitutions:
