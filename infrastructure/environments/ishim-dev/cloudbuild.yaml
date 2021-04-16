@@ -1,0 +1,47 @@
+steps:
+## Run terraform init step
+- id: "terraform => init"
+  name: 'hashicorp/terraform'
+  entrypoint: 'sh'
+  args:
+    - '-c'
+    - |
+        env="dev"
+        terraform init \
+        -backend-config=bucket="ishim-adm-tf-state" \
+        -backend-config=prefix="${env}"
+        cd ../../../
+
+## Run the plan command
+- id: "terraform => plan"
+  name: 'hashicorp/terraform'
+  entrypoint: 'sh'
+  args:
+  - '-c'
+  - |
+      cd infrastructure/projects/ishim-dev/
+      terraform plan || exit 1
+      cd ../../../
+
+## Run actual deployment step
+- id: "terraform => apply"
+  name: 'hashicorp/terraform'
+  entrypoint: 'sh'
+  args:
+  - '-c'
+  - |
+      if [[ ! -f "${_PR_NUMBER}" ]]; then
+        terraform apply -auto-approve
+      fi
+
+  env:
+    # - 'TF_VAR_component=${_COMPONENT}'
+    # - 'TF_VAR_admin_project_id=$PROJECT_ID'
+    # - 'TF_VAR_repo_branch=$BRANCH_NAME'
+    # - 'TF_VAR_repo_commit=$REVISION_ID'
+    # - 'TF_VAR_gcp_pci_prj_prefix=${_PROJECT_ID_PREFIX}'
+    # - 'TF_LOG=DEBUG'
+
+substitutions:
+
+tags: ['admin']
