@@ -7,9 +7,11 @@ steps:
     - '-c'
     - |
         env="dev"
+        cd infrastructure/environments/ishim-dev/
         terraform init \
         -backend-config=bucket="ishim-adm-tf-state" \
         -backend-config=prefix="${env}"
+        cd ../../../
 
 ## Run the plan command
 - id: "terraform => plan"
@@ -18,7 +20,9 @@ steps:
   args:
     - '-c'
     - |
+        cd infrastructure/environments/ishim-dev/
         terraform plan || exit 1
+        cd ../../../
 
 ## Run actual deployment step
 - id: "terraform => apply"
@@ -28,7 +32,9 @@ steps:
     - '-c'
     - |
         if [[ ! -f "${_PR_NUMBER}" ]]; then
+          cd infrastructure/environments/ishim-dev/
           terraform apply -auto-approve
+          cd ../../../
         fi
 
   env:
